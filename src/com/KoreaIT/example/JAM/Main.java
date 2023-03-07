@@ -8,9 +8,9 @@ public class Main {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		
-		System.out.println("== 프로그램 시작 ==");
-		
 		Scanner sc = new Scanner(System.in); //우선 처음으로 만들어 준다.
+
+		System.out.println("== 프로그램 시작 ==");
 		
 		List<Article> articles = new ArrayList<>();
 		
