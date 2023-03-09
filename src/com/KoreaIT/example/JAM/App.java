@@ -14,20 +14,15 @@ public class App {
 		Scanner sc = new Scanner(System.in); //우선 처음으로 만들어 준다.
 
 		System.out.println("== 프로그램 시작 ==");
-		
-		List<Article> articles = new ArrayList<>();
-		
+
 		int lastArticlesId = 0;
 		
 		while(true) {
 			
 			System.out.printf("명령어) ");
 		    String cmd = sc.nextLine().trim();
-		    if(cmd.equals("exit")) {
-		    	
-		    	break;
-		    }
-		    else if(cmd.equals("article write")) {
+		    
+		     if(cmd.equals("article write")) {
 				int id = lastArticlesId + 1;
 				lastArticlesId++;
 				
@@ -38,9 +33,6 @@ public class App {
 			    System.out.printf("내용: ");
 			    String body = sc.nextLine().trim();
 			    
-			    Article article = new Article(id,title,body);
-			    
-			    articles.add(article);
 			    
 			    Connection conn = null;
 				PreparedStatement pstmt = null;
@@ -91,6 +83,8 @@ public class App {
 				PreparedStatement pstmt = null;
 				ResultSet rs =null;
 				
+				List<Article> articles = new ArrayList<>();
+				
 				try {
 					Class.forName("com.mysql.jdbc.Driver");
 					String url = "jdbc:mysql://127.0.0.1:3306/jdbc_article_manager?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
@@ -98,7 +92,7 @@ public class App {
 					conn = DriverManager.getConnection(url, "root", "");
 					
 					String sql = "SELECT *";
-					sql += " From article";
+					sql += " FROM article";
 					sql += " ORDER BY id DESC;";
 					
 					pstmt = conn.prepareStatement(sql);
@@ -149,9 +143,8 @@ public class App {
 		    	}
 		    	
 		    	System.out.println("번호	|	제목");
-		    	for(int i = 0; i < articles.size(); i++ ) {
-		    		Article article = articles.get(i);
-		    		
+		    	for(Article article : articles) {
+		    	
 		    		System.out.printf("%d	|	%s\n", article.id,article.title);
 		    	}
 		    }
@@ -178,7 +171,9 @@ public class App {
 					sql += ", title ='" +title +"'";
 					sql += ", `body` ='" +body+ "'";
 					sql += " WHERE id = "+ id + ";";
-
+					
+					System.out.println(sql);
+				 
 					pstmt = conn.prepareStatement(sql);
 					pstmt.executeUpdate();
 
@@ -208,9 +203,15 @@ public class App {
 		    else {
 		    	System.out.println("존재하지 않는 명령어 입니다.");
 		    }
+		    
+		    if(cmd.equals("exit")) {
+		    	
+		    	System.out.println("== 프로그램 종료 ==");
+		    	break;
+		    }
 		}
 		
-		System.out.println("== 프로그램 종료 ==");
+		sc.close();
 	}
 }
 

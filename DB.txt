@@ -18,3 +18,9 @@ title = CONCAT('제목',RAND()), # RAND 난수
 
 DESC article;
 SELECT * FROM article;
+ 
+UPDATE article // modify에 쓰여진 로직
+SET upadteDate =NOW(),
+title = 'title',
+`body` = 'body',
+WHERE id = id;
