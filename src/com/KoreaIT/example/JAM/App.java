@@ -190,6 +190,19 @@ public class App {
 							System.out.println("아이디를 입력해 주세요");
 							continue;
 						}
+						
+						SecSql sql = new SecSql();
+						
+						sql.append("SELECT COUNT(*) > 0");
+						sql.append("FROM `member`");
+						sql.append("WHERE loginId = ?", loginId);
+
+						boolean isLoginIdDup = DBUtil.selectRowBooleanValue(conn, sql);
+						if(isLoginIdDup) {
+							System.out.printf("%s는 사용중인 아이디 입니다.\n",loginId);
+							continue;
+						}
+						System.out.printf("%s는 사용가능한 아이디 입니다.\n",loginId);
 						break;
 					}
 					while(true) {
@@ -198,18 +211,18 @@ public class App {
 						loginPw = sc.nextLine().trim();
 						
 						if(loginPw.length() == 0) {
-							System.out.println("비밀번호를 입력해 주세요");
+							System.out.println("비밀번호를 입력해 주세요.");
 							continue;
 						}
 						
 						boolean loginPwCheck =true;
 						
 						while(true) {
-							System.out.printf("비밀번호 화인 ");
+							System.out.printf("비밀번호 확인 : ");
 							loginPwChk = sc.nextLine().trim();
 							
 							if(loginPwChk.length() == 0) {
-								System.out.println("비밀번호를 입력해 주세요");
+								System.out.println("비밀번호를 입력해 주세요.");
 								continue;
 							}
 							
