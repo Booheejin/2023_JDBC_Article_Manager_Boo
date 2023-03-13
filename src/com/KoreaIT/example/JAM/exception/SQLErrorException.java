@@ -1,5 +1,6 @@
 package com.KoreaIT.example.JAM.exception;
 
+@SuppressWarnings("serial")
 public class SQLErrorException extends RuntimeException{
 	private Exception origin;
 
