@@ -176,10 +176,16 @@ public class App {
 					
 					
 				}
+				else {
+					
+					System.out.println("존재하지 않는 명령어 입니다.");
+				}
+				
 				if (cmd.equals("exit")) {
 					System.out.println("== 프로그램 종료 ==");
 					break;
 				}
+				
 			}
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
