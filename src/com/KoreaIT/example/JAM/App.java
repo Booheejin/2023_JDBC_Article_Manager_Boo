@@ -167,14 +167,85 @@ public class App {
 					sql.append("WHERE id = ?", id);
 
 					DBUtil.update(conn, sql);
+					
+					
 
 					System.out.printf("%d번 글이 수정되었습니다\n", id);
 					
 				}
 				else if(cmd.startsWith("member join")) {
+					String loginId = null;
+					String loginPw = null;
+					String loginPwChk = null;
+					String name = null;
+					
+					System.out.println("== 회원 가입 ==");
 					
 					
+					while(true) {
+						System.out.printf("로그인 아이디 : ");
+						loginId = sc.nextLine().trim();
+						
+						if(loginId.length() == 0) {
+							System.out.println("아이디를 입력해 주세요");
+							continue;
+						}
+						break;
+					}
+					while(true) {
+						
+						System.out.printf("비밀번호 : ");
+						loginPw = sc.nextLine().trim();
+						
+						if(loginPw.length() == 0) {
+							System.out.println("비밀번호를 입력해 주세요");
+							continue;
+						}
+						
+						boolean loginPwCheck =true;
+						
+						while(true) {
+							System.out.printf("비밀번호 화인 ");
+							loginPwChk = sc.nextLine().trim();
+							
+							if(loginPwChk.length() == 0) {
+								System.out.println("비밀번호를 입력해 주세요");
+								continue;
+							}
+							
+							if(loginPw.equals(loginPwChk) == false) {
+								System.out.println("비밀번호가 일치하지 않습니다.");
+								loginPwCheck = false;
+							}
+							break;
+						}
+						if (loginPwCheck) {
+							break;
+						}
+					}
+					while(true) {
+						System.out.printf("이름 ");
+						name = sc.nextLine().trim();
+						
+						if(name.length() == 0) {
+							System.out.println("이름을 입력해 주세요");
+							continue;
+						}
+						break;
+					}
 					
+					SecSql sql = new SecSql();
+					
+					sql.append("INSERT INTO member");
+					sql.append("SET regDate = NOW()");
+					sql.append(", updateDate = NOW()");
+					sql.append(", loginId = ?",loginId);
+					sql.append(", loginPw = ?",loginPw);
+					sql.append(", name = ?", name);
+					
+					int id = DBUtil.insert(conn, sql);
+					
+					System.out.printf("%d번 회원님 가입성공!!\n",id);
 				}
 				else {
 					
