@@ -19,7 +19,7 @@ public class Article {
 	}
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", title=" + title + ", body=" + body + "]";
+		return "Article [id=" + id + ", regDate=" + regDate + ",updateDate=" + updateDate + ",title=" + title + ", body=" + body + "]";
 	}
 	// 객체에 내용물을 보기위한 소스!
 	
