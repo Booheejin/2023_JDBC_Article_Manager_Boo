@@ -55,6 +55,9 @@ loginId = 'test', # RAND 난수
 loginPw = 'test',
 `name` = '철수';
 
+#member 테이블 loginId에 UNIQUE 추가
+ALTER TABLE `member` MODIFY COLUMN loginId VARCHAR(50) NOT NULL UNIQUE;
+
 
 #false = 0 ,true = 1 을 판단하는 로직   join에 쓰고 있음
 SELECT COUNT(*) > 0
