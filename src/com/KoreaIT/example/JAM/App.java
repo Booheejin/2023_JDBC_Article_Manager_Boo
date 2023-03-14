@@ -24,7 +24,7 @@ public class App {
 			
 			conn = DriverManager.getConnection(url, "root", "");
 			
-			ArticleController articleController = new ArticleController(sc,conn);
+			ArticleController articleController = new ArticleController(sc,conn); 
 			MemberController memberController = new MemberController(conn,sc);
 			
 			while (true) {
@@ -52,6 +52,7 @@ public class App {
 				}
 				else {
 					System.out.println("존재하지 않는 명령어 입니다.");
+
 				}
 				
 				if (cmd.equals("exit")) {

@@ -7,18 +7,16 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.KoreaIT.example.JAM.Article;
-import com.KoreaIT.example.JAM.util.DBUtil;
-import com.KoreaIT.example.JAM.util.SecSql;
+import com.KoreaIT.example.JAM.service.ArticleService;
 
 public class ArticleController {
-	
-	private Connection conn;
+	private ArticleService articleService;
 	private Scanner sc;
-		
 	
 	public ArticleController(Scanner sc, Connection conn) {
-		this.conn = conn;
+		this.articleService = new ArticleService(conn);
 		this.sc = sc;
+		
 	}
 
 	public void showWrite() {
@@ -28,15 +26,10 @@ public class ArticleController {
 		String title = sc.nextLine();
 		System.out.printf("내용 : ");
 		String body = sc.nextLine();
-		SecSql sql = new SecSql();
-			
-		sql.append("INSERT INTO article");
-		sql.append("SET regDate = NOW()");
-		sql.append(", updateDate = NOW()");
-		sql.append(", title = ?", title);
-		sql.append(", `body` = ?", body);
-			
-		int id = DBUtil.insert(conn, sql);
+		
+		
+		int id = articleService.InWrite(title,body);	
+//		int id = DBUtil.insert(conn, sql);
 			
 		System.out.printf("%d번 글이 생성되었습니다\n", id);
 		
@@ -47,13 +40,9 @@ public class ArticleController {
 		
 		List<Article> articles = new ArrayList<>();
 		
-		SecSql sql = new SecSql();
 		
-		sql.append("SELECT *");
-		sql.append("FROM article");
-		sql.append("ORDER BY id DESC");
-		
-		List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
+		List<Map<String, Object>> articleListMap = articleService.ExList();
+//		List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
 		
 		for(Map<String, Object> articleMap : articleListMap) {
 			articles.add(new Article(articleMap));
@@ -75,13 +64,8 @@ public class ArticleController {
 	public void showDetail(String cmd) {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 		
-		SecSql sql = new SecSql();
-
-		sql.append("SELECT *");
-		sql.append("FROM article");
-		sql.append("WHERE id = ?", id);
-		
-		Map<String,Object> articleMap = DBUtil.selectRow(conn, sql);
+		Map<String,Object> articleMap = articleService.Exdetail(id);
+//		Map<String,Object> articleMap = DBUtil.selectRow(conn, sql);
 		
 		if(articleMap.isEmpty()) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다\n",id);
@@ -102,13 +86,10 @@ public class ArticleController {
 	public void showDelete(String cmd) {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		SecSql sql = new SecSql();
+		
+		int articlesCount = articleService.ExDelete(id);
+//		int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
-		sql.append("SELECT COUNT(*)");
-		sql.append("FROM article");
-		sql.append("WHERE id = ?", id);
-
-		int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
 		if(articlesCount == 0) {
 			System.out.printf("%d번 글은 존재하지 않습니다\n", id);
@@ -116,14 +97,10 @@ public class ArticleController {
 		}
 
 		System.out.println("== 게시물 삭제 ==");
-
-		sql = new SecSql();
-
-		sql.append("DELETE FROM article");
-		sql.append("WHERE id =?",id);
-
-		DBUtil.delete(conn, sql);
-
+		
+		
+		articleService.Deletelog(id);
+		
 		System.out.printf("%d번 글이 삭제되었습니다\n", id);
 		
 	}
@@ -131,13 +108,8 @@ public class ArticleController {
 	public void showModify(String cmd) {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		SecSql sql = new SecSql();
-
-		sql.append("SELECT COUNT(*)");
-		sql.append("FROM article");
-		sql.append("WHERE id = ?", id);
-
-		int articlesCount = DBUtil.selectRowIntValue(conn, sql);
+		int articlesCount = articleService.ExModify(id);
+//		int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
 		if(articlesCount == 0) {
 			System.out.printf("%d번 글은 존재하지 않습니다\n", id);
@@ -151,19 +123,8 @@ public class ArticleController {
 		System.out.printf("수정할 내용 : ");
 		String body = sc.nextLine();
 
-
-		sql = new SecSql();
-
-		sql.append("UPDATE article");
-		sql.append("SET updateDate = NOW()");
-		sql.append(", title = ?", title);
-		sql.append(", `body` = ?", body);
-		sql.append("WHERE id = ?", id);
-
-		DBUtil.update(conn, sql);
+		articleService.Modifylog(title,body,id);
 		
-		
-
 		System.out.printf("%d번 글이 수정되었습니다\n", id);
 		
 		
