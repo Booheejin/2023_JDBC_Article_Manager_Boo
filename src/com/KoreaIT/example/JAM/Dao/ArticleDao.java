@@ -37,7 +37,7 @@ public class ArticleDao {
 		return DBUtil.selectRows(conn, sql);
 	}
 
-	public Map<String, Object> Exdetail(int id) {
+	public Map<String,Object> ExDetail(int id) {
 		
 		SecSql sql = new SecSql();
 
@@ -46,16 +46,6 @@ public class ArticleDao {
 		sql.append("WHERE id = ?", id);
 		
 		return DBUtil.selectRow(conn, sql);
-	}
-
-	public int ExDelete(int id) {
-		SecSql sql = new SecSql();
-
-		sql.append("SELECT COUNT(*)");
-		sql.append("FROM article");
-		sql.append("WHERE id = ?", id);
-		
-		return DBUtil.selectRowIntValue(conn, sql);
 	}
 
 	public void Deletelog( int id) {
@@ -68,7 +58,7 @@ public class ArticleDao {
 		
 	}
 
-	public int ExModify(int id) {
+	public int getArticleCount(int id) {
 
 		SecSql sql = new SecSql();
 

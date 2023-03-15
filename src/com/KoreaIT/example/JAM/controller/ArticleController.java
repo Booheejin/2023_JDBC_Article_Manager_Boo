@@ -1,9 +1,7 @@
 package com.KoreaIT.example.JAM.controller;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.KoreaIT.example.JAM.Article;
@@ -38,15 +36,9 @@ public class ArticleController {
 	public void showList() {
 		System.out.println("== 게시물 목록 ==");
 		
-		List<Article> articles = new ArrayList<>();
-		
-		
-		List<Map<String, Object>> articleListMap = articleService.ExList();
+		List<Article> articles = articleService.ExList();
+//		List<Map<String, Object>> articleListMap = articleService.ExList();
 //		List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
-		
-		for(Map<String, Object> articleMap : articleListMap) {
-			articles.add(new Article(articleMap));
-		}
 		
 		if (articles.size() == 0) {
 			System.out.println("게시물이 없습니다");
@@ -64,16 +56,16 @@ public class ArticleController {
 	public void showDetail(String cmd) {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 		
-		Map<String,Object> articleMap = articleService.Exdetail(id);
+		
+		Article article = articleService.ExDetail(id);
+//		Map<String,Object> articleMap = articleService.Exdetail(id);
 //		Map<String,Object> articleMap = DBUtil.selectRow(conn, sql);
 		
-		if(articleMap.isEmpty()) {
+		if(article == null) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다\n",id);
 			return;
 		}
 		System.out.printf("== %d 게시물 상세보기 ==\n", id);
-		
-		Article article = new Article(articleMap);
 		
 		System.out.printf("번호 : %d\n",article.id);
 		System.out.printf("작성날짜 : %s\n",article.regDate);
@@ -87,7 +79,7 @@ public class ArticleController {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
 		
-		int articlesCount = articleService.ExDelete(id);
+		int articlesCount = articleService.getArticleCount(id);
 //		int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
 
@@ -108,7 +100,7 @@ public class ArticleController {
 	public void showModify(String cmd) {
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		int articlesCount = articleService.ExModify(id);
+		int articlesCount = articleService.getArticleCount(id);
 //		int articlesCount = DBUtil.selectRowIntValue(conn, sql);
 
 		if(articlesCount == 0) {

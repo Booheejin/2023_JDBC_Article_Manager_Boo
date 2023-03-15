@@ -1,9 +1,11 @@
 package com.KoreaIT.example.JAM.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.KoreaIT.example.JAM.Article;
 import com.KoreaIT.example.JAM.Dao.ArticleDao;
 
 public class ArticleService {
@@ -19,19 +21,25 @@ public class ArticleService {
 		return articleDao.InWrite(title,body);
 	}
 
-	public List<Map<String, Object>> ExList() {
+	public List<Article> ExList() {
 		
-		return articleDao.ExList();
+		List<Map<String, Object>> articleListMap = articleDao.ExList();
+				
+		List<Article> articles = new ArrayList<>();
+		
+		for(Map<String, Object> articleMap : articleListMap) {
+			articles.add(new Article(articleMap));
+		}
+		return articles;
 	}
 
-	public Map<String, Object> Exdetail(int id) {
+	public Article ExDetail(int id) {
 		
-		return articleDao.Exdetail(id);
-	}
-
-	public int ExDelete(int id) {
+		Map<String,Object> articleMap = articleDao.ExDetail(id);
 		
-		return articleDao.ExDelete(id);
+		Article article = new Article(articleMap);
+		
+		return article;
 	}
 
 	public void Deletelog(int id) {
@@ -40,9 +48,9 @@ public class ArticleService {
 		
 	}
 
-	public int ExModify(int id) {
+	public int getArticleCount(int id) {
 		
-		return articleDao.ExModify(id);
+		return articleDao.getArticleCount(id);
 	}
 
 	public void Modifylog(String title, String body, int id) {
