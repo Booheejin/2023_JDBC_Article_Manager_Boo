@@ -10,6 +10,7 @@ public class Article {
 	public String title;
 	public String body;
 	public int memberId;
+	public String name;
 	
 	public Article(Map<String, Object> articleMap) {
 		this.id = (int) articleMap.get("id");
@@ -18,6 +19,7 @@ public class Article {
 		this.memberId = (int) articleMap.get("memberId");
 		this.title = (String) articleMap.get("title");
 		this.body = (String) articleMap.get("body");
+		this.name = (String) articleMap.get("name");
 	}
 	@Override
 	public String toString() {

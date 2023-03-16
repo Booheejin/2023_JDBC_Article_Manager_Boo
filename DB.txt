@@ -3,33 +3,20 @@ DROP DATABASE IF EXISTS jdbc_article_manager;
 CREATE DATABASE jdbc_article_manager;
 USE jdbc_article_manager;
 
+#TABLE 삭제 
+DROP TABLE article;
+DROP TABLE `member`;
+
 #article 테이블 생성
 CREATE TABLE article(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	regDate DATETIME  NOT NULL,
 	updateDate DATETIME NOT NULL,
+	memberId INT UNSIGNED NOT NULL,
 	title VARCHAR(100) NOT NULL,
-	`body` TEXT NOT NULL
+	`body` TEXT NOT NULL,
+	`name` VARCHAR(20) NOT NULL
 );
-# article 테이블에 회원번호 컬럼 추가
-ALTER TABLE article ADD COLUMN memberId INT UNSIGNED NOT NULL AFTER updateDate;
-
-#article 테스트 데이터 
-INSERT INTO article
-SET regDate = NOW(),
-updateDate= NOW(),
-memberId = 1,
-title = CONCAT('제목',RAND()), # RAND 난수 
-`body` = CONCAT('내용',RAND());
-
-
-
-UPDATE article
-SET upadteDate =NOW(),
-title = 'title',
-`body` = 'body',
-WHERE id = id;
-
 #member 테이블 생성
 CREATE TABLE `member`(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -39,13 +26,16 @@ CREATE TABLE `member`(
 	loginPw VARCHAR(50) NOT NULL,
 	`name` VARCHAR(50) NOT NULL
 );
-# 테이블 구조확인
-DESC `member`;
-DESC article;
+# article 테이블에 회원번호 컬럼 추가
+#중간에 추가방법 : alter table article add column memberId int unsigned not null after updateDate;
 
-# 테이블 구조 조회
-SELECT * FROM `member`;
-SELECT * FROM article;
+#article 테스트 데이터 
+INSERT INTO article
+SET regDate = NOW(),
+updateDate= NOW(),
+memberId = 1,
+title = CONCAT('제목',RAND()), # RAND 난수 
+`body` = CONCAT('내용',RAND());
 
 #member 테스트 데이터 
 INSERT INTO `member`
@@ -54,3 +44,21 @@ updateDate= NOW(),
 loginId = 'test', # RAND 난수 
 loginPw = 'test',
 `name` = '철수';
+UPDATE article
+
+SET upadteDate =NOW(),
+title = 'title',
+`body` = 'body',
+WHERE id = id;
+
+# 테이블 구조확인
+DESC `member`;
+DESC article;
+
+# 테이블 구조 조회
+SELECT * FROM `member`;
+SELECT * FROM article;
+
+SELECT *
+FROM article
+ORDER BY id DESC

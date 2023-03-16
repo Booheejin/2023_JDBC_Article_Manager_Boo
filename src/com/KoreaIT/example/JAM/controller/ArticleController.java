@@ -33,8 +33,7 @@ public class ArticleController {
 		String body = sc.nextLine();
 		
 		
-		
-		int id = articleService.InWrite(title,body,Session.loginedMemberId);	
+		int id = articleService.InWrite(title,body,Session.loginedMemberId,Session.loginMemberName);	
 //		int id = DBUtil.insert(conn, sql);
 			
 		System.out.printf("%d번 글이 생성되었습니다\n", id);
@@ -57,7 +56,7 @@ public class ArticleController {
 		System.out.println("번호	|	제목	|	이름"); // 여기 작상자명 나오는거부터
 		
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s\n", article.id, article.title);
+			System.out.printf("%d	|	%s	|	%s\n", article.id, article.title,article.name);
 		}
 		
 	}
@@ -92,6 +91,7 @@ public class ArticleController {
 		System.out.printf("수정날짜 : %s\n",Util.DatetimeFormat(article.updateDate));
 		System.out.printf("제목 : %s\n",article.title);
 		System.out.printf("내용 : %s\n",article.body);
+		System.out.printf("작성자명 : %s\n",article.name);
 		
 	}
 
