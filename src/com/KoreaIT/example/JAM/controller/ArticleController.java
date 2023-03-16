@@ -53,10 +53,10 @@ public class ArticleController {
 		}
 		
 		
-		System.out.println("번호	|	제목	|	이름"); // 여기 작상자명 나오는거부터
+		System.out.println("번호	|	제목	|	작성자명");  
 		
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s	|	%s\n", article.id, article.title,article.name);
+			System.out.printf("%d	|	%s	|	 %s\n", article.id, article.title,article.memberName);
 		}
 		
 	}
@@ -91,7 +91,7 @@ public class ArticleController {
 		System.out.printf("수정날짜 : %s\n",Util.DatetimeFormat(article.updateDate));
 		System.out.printf("제목 : %s\n",article.title);
 		System.out.printf("내용 : %s\n",article.body);
-		System.out.printf("작성자명 : %s\n",article.name);
+		System.out.printf("작성자명 : %s\n",article.memberName);
 		
 	}
 

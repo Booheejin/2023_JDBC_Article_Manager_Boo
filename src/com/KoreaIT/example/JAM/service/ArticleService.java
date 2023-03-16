@@ -16,9 +16,9 @@ public class ArticleService {
 		this.articleDao = new ArticleDao(conn);
 	}
 
-	public int InWrite(String title, String body, int loginedMemberId,String name) {
+	public int InWrite(String title, String body, int loginedMemberId,String memberName) {
 		
-		return articleDao.InWrite(title,body, loginedMemberId,name);
+		return articleDao.InWrite(title,body, loginedMemberId,memberName);
 	}
 
 	public List<Article> getArticles() {
