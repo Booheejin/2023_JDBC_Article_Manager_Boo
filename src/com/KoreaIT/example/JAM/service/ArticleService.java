@@ -16,14 +16,14 @@ public class ArticleService {
 		this.articleDao = new ArticleDao(conn);
 	}
 
-	public int InWrite(String title, String body) {
+	public int InWrite(String title, String body, int loginedMemberId) {
 		
-		return articleDao.InWrite(title,body);
+		return articleDao.InWrite(title,body, loginedMemberId);
 	}
 
-	public List<Article> ExList() {
+	public List<Article> getArticles() {
 		
-		List<Map<String, Object>> articleListMap = articleDao.ExList();
+		List<Map<String, Object>> articleListMap = articleDao.getArticles();
 				
 		List<Article> articles = new ArrayList<>();
 		
@@ -33,31 +33,33 @@ public class ArticleService {
 		return articles;
 	}
 
-	public Article ExDetail(int id) {
+	public Article getArticle(int id) {
 		
-		Map<String,Object> articleMap = articleDao.ExDetail(id);
+		Map<String,Object> articleMap = articleDao.getArticle(id);
 		
-		Article article = new Article(articleMap);
-		
-		return article;
-	}
-
-	public void Deletelog(int id) {
-		
-		articleDao.Deletelog(id);
-		
+		if (articleMap.isEmpty()) {
+			return null;
+		}
+		return new Article(articleMap);
 	}
 
 	public int getArticleCount(int id) {
 		
 		return articleDao.getArticleCount(id);
 	}
+	
+	public void Deletelog(int id) {
+		
+		articleDao.Deletelog(id);
+		
+	}
+
 
 	public void Modifylog(String title, String body, int id) {
 		articleDao.Modifylog(title,body,id);
 		
 	}
 
-	
+
 
 }

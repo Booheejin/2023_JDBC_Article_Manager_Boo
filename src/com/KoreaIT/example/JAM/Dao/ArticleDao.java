@@ -15,19 +15,20 @@ public class ArticleDao {
 		this.conn = conn;
 	}
 
-	public int InWrite(String title, String body) {
+	public int InWrite(String title, String body,int loginedMemberid) {
 		SecSql sql = new SecSql();
 		
 		sql.append("INSERT INTO article");
 		sql.append("SET regDate = NOW()");
 		sql.append(", updateDate = NOW()");
+		sql.append(", memberId = ?",loginedMemberid);
 		sql.append(", title = ?", title);
 		sql.append(", `body` = ?", body);
 		
 		return DBUtil.insert(conn, sql);
 	}
 
-	public List<Map<String, Object>> ExList() {
+	public List<Map<String, Object>> getArticles() {
 		SecSql sql = new SecSql();
 		
 		sql.append("SELECT *");
@@ -37,7 +38,7 @@ public class ArticleDao {
 		return DBUtil.selectRows(conn, sql);
 	}
 
-	public Map<String,Object> ExDetail(int id) {
+	public Map<String,Object> getArticle(int id) {
 		
 		SecSql sql = new SecSql();
 

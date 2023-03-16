@@ -5,6 +5,7 @@ import com.KoreaIT.example.JAM.dto.Member;
 public class Session {
 	public static int loginedMemberId;
 	public static Member loginedMember;
+	public static String memberName;
 	
 	static {
 		loginedMemberId = -1;
@@ -22,5 +23,13 @@ public class Session {
 	}
 	public static boolean isLogined() {
 		return loginedMemberId != -1;
+	}
+	public static void memberName(Member member) {
+		memberName = member.name;
+	}
+	
+	public static Object isMemberName() {
+		
+		return memberName;
 	}
 }

@@ -33,13 +33,16 @@ public class App {
 				String cmd = sc.nextLine().trim();
 				
 				if(cmd.startsWith("member join")) {
-					memberController.showJoin();
+					memberController.doJoin();
 				}
 				else if(cmd.startsWith("member login")) {
-					memberController.showlogin();
+					memberController.dologin();
 				}
 				else if(cmd.startsWith("member logout")) {
-					memberController.showlogout();
+					memberController.dologout();
+				}
+				else if(cmd.startsWith("member porfile")) {
+					memberController.showPorfile();
 				}
 				else if (cmd.equals("article write")) {
 					articleController.showWrite();

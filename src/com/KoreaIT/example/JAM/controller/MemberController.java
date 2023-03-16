@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.KoreaIT.example.JAM.dto.Member;
 import com.KoreaIT.example.JAM.service.MemberService;
 import com.KoreaIT.example.JAM.session.Session;
+import com.KoreaIT.example.JAM.util.Util;
 
 public class MemberController {
 	
@@ -18,9 +19,9 @@ public class MemberController {
 		this.sc = sc;
 	}
 
-	public void showJoin() {
+	public void doJoin() {
 		
-		System.out.println(Session.loginedMemberId);
+
 		if (Session.isLogined()){
 			System.out.println("로그아웃 후 이용해주세요");
 			return;
@@ -86,7 +87,7 @@ public class MemberController {
 			}
 		}
 		while(true) {
-			System.out.printf("이름 ");
+			System.out.printf("이름 : ");
 			name = sc.nextLine().trim();
 			
 			if(name.length() == 0) {
@@ -103,7 +104,7 @@ public class MemberController {
 		
 	}
 
-	public void showlogin() {
+	public void dologin() {
 		
 		if (Session.isLogined()){
 			System.out.println("로그아웃 후 이용해주세요");
@@ -153,7 +154,7 @@ public class MemberController {
 		
 	}
 
-	public void showlogout() {
+	public void dologout() {
 		
 		if (Session.isLogined() == false){
 			System.out.println("로그인 후 이용해주세요");
@@ -162,6 +163,20 @@ public class MemberController {
 		
 		Session.logout();
 		System.out.println("로그아웃 되었습니다.");
+	}
+
+	public void showPorfile() {
+		
+		if (Session.isLogined() == false){
+			System.out.println("로그인 후 이용해주세요");
+			return;
+		}
+		
+		System.out.println("== 마이 페이지 ==");
+		System.out.printf("로그인 아이디: %s\n",Session.loginedMember.loginId);
+		System.out.printf("가입일자: %s\n",Util.DatetimeFormat(Session.loginedMember.regDate));
+		System.out.printf("이름: %s\n",Session.loginedMember.name);
+		
 	}
 
 }
