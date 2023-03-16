@@ -32,7 +32,13 @@ public class App {
 				System.out.printf("명령어) ");
 				String cmd = sc.nextLine().trim();
 				
-				if (cmd.equals("article write")) {
+				if(cmd.startsWith("member join")) {
+					memberController.showJoin();
+				}
+				else if(cmd.startsWith("member login")) {
+					memberController.showlogin();
+				}
+				else if (cmd.equals("article write")) {
 					articleController.showWrite();
 				} 
 				else if (cmd.equals("article list")) {
@@ -46,9 +52,6 @@ public class App {
 				}
 				else if (cmd.startsWith("article modify ")) {
 					articleController.showModify(cmd);
-				}
-				else if(cmd.startsWith("member join")) {
-					memberController.showJoin();
 				}
 				else {
 					System.out.println("존재하지 않는 명령어 입니다.");

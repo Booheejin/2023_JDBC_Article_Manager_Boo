@@ -1,8 +1,10 @@
 package com.KoreaIT.example.JAM.controller;
 
+
 import java.sql.Connection;
 import java.util.Scanner;
 
+import com.KoreaIT.example.JAM.Member;
 import com.KoreaIT.example.JAM.service.MemberService;
 
 public class MemberController {
@@ -90,6 +92,49 @@ public class MemberController {
 //		int id = DBUtil.insert(conn, sql);
 		
 		System.out.printf("%d번 회원님 가입성공!!\n",id);
+		
+	}
+
+	public void showlogin() {
+		String loginId = null;
+		String loginPw = null;
+		System.out.println("== 로그인 ==");
+		
+		while(true) {
+			
+			System.out.printf("로그인 아이디 : ");
+			loginId = sc.nextLine().trim();
+			System.out.printf("로그인 비밀번호 : ");
+			loginPw = sc.nextLine().trim();
+			
+			
+			if(loginId.length() == 0) {
+				System.out.println("아이디를 입력해 주세요");
+				continue;
+			}
+			if(loginPw.length() == 0) {
+				System.out.println("비밀번호를 입력해 주세요");
+				continue;
+			}
+			
+			boolean isLoginIdDup = memberService.isLoginIdDup(loginId);
+			
+			if(isLoginIdDup == false) {
+				System.out.printf("%s는 존재하지 않는 아이디 입니다.\n",loginId);
+				continue;
+			}
+			Member member = memberService.getMemeberByLoginId(loginId);
+			
+			if(member.loginPw.equals(loginPw) == false) {
+				System.out.println("비밀번호가 일치하지 않습니다");
+				continue;
+			}
+			
+			System.out.printf("%s번 회원님 환영합니다!!\n",loginId);
+			
+			break;
+			
+		}
 		
 	}
 
