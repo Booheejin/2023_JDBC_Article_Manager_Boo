@@ -3,8 +3,8 @@ package com.KoreaIT.example.JAM.service;
 import java.sql.Connection;
 import java.util.Map;
 
-import com.KoreaIT.example.JAM.Member;
 import com.KoreaIT.example.JAM.Dao.MemberDao;
+import com.KoreaIT.example.JAM.dto.Member;
 
 public class MemberService {
 	
@@ -27,9 +27,11 @@ public class MemberService {
 	public Member getMemeberByLoginId(String loginId) {
 		Map<String,Object> memberMap = memberDao.getMemeberByLoginId(loginId);
 		
-		Member member= new Member(memberMap);
+		if(memberMap.isEmpty()) {
+			return null;
+		}
 		
-		return member;
+		return new Member(memberMap);
 	}
 	
 

@@ -4,8 +4,9 @@ package com.KoreaIT.example.JAM.controller;
 import java.sql.Connection;
 import java.util.Scanner;
 
-import com.KoreaIT.example.JAM.Member;
+import com.KoreaIT.example.JAM.dto.Member;
 import com.KoreaIT.example.JAM.service.MemberService;
+import com.KoreaIT.example.JAM.session.Session;
 
 public class MemberController {
 	
@@ -18,6 +19,13 @@ public class MemberController {
 	}
 
 	public void showJoin() {
+		
+		System.out.println(Session.loginedMemberId);
+		if (Session.isLogined()){
+			System.out.println("로그아웃 후 이용해주세요");
+			return;
+		}
+		
 		String loginId = null;
 		String loginPw = null;
 		String loginPwChk = null;
@@ -96,6 +104,12 @@ public class MemberController {
 	}
 
 	public void showlogin() {
+		
+		if (Session.isLogined()){
+			System.out.println("로그아웃 후 이용해주세요");
+			return;
+		}
+		
 		String loginId = null;
 		String loginPw = null;
 		System.out.println("== 로그인 ==");
@@ -117,25 +131,37 @@ public class MemberController {
 				continue;
 			}
 			
-			boolean isLoginIdDup = memberService.isLoginIdDup(loginId);
 			
-			if(isLoginIdDup == false) {
+			Member member = memberService.getMemeberByLoginId(loginId);
+			
+			if(member == null) {
 				System.out.printf("%s는 존재하지 않는 아이디 입니다.\n",loginId);
 				continue;
 			}
-			Member member = memberService.getMemeberByLoginId(loginId);
 			
 			if(member.loginPw.equals(loginPw) == false) {
 				System.out.println("비밀번호가 일치하지 않습니다");
 				continue;
 			}
 			
-			System.out.printf("%s번 회원님 환영합니다!!\n",loginId);
+			Session.login(member);
+			System.out.printf("%s 회원님 환영합니다!!\n",member.name);
 			
 			break;
 			
 		}
 		
+	}
+
+	public void showlogout() {
+		
+		if (Session.isLogined() == false){
+			System.out.println("로그인 후 이용해주세요");
+			return;
+		}
+		
+		Session.logout();
+		System.out.println("로그아웃 되었습니다.");
 	}
 
 }

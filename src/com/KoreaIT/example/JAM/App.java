@@ -38,6 +38,9 @@ public class App {
 				else if(cmd.startsWith("member login")) {
 					memberController.showlogin();
 				}
+				else if(cmd.startsWith("member logout")) {
+					memberController.showlogout();
+				}
 				else if (cmd.equals("article write")) {
 					articleController.showWrite();
 				} 
