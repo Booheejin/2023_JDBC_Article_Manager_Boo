@@ -29,13 +29,17 @@ CREATE TABLE `member`(
 # article 테이블에 회원번호 컬럼 추가
 #중간에 추가방법 : alter table article add column memberId int unsigned not null after updateDate;
 
+# article 테이블에 count 컬럼 추가
+ALTER TABLE article ADD COLUMN `count` INT UNSIGNED NOT NULL AFTER updateDate;
+
 #article 테스트 데이터 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate= NOW(),
 memberId = 1,
 title = CONCAT('제목',RAND()), # RAND 난수 
-`body` = CONCAT('내용',RAND());
+`body` = CONCAT('내용',RAND()),
+`count` = 2;
 
 #member 테스트 데이터 
 INSERT INTO `member`
@@ -61,4 +65,10 @@ SELECT * FROM article;
 
 SELECT *
 FROM article
-ORDER BY id DESC
+ORDER BY id DESC;
+
+SELECT a.*, m.name AS writerName  조인방법으로 풀이
+FROM article AS a
+INNER JOIN `member` AS m
+ON a.memberId = m.id
+ORDER BY a.id DESC;

@@ -21,9 +21,9 @@ public class ArticleService {
 		return articleDao.InWrite(title,body, loginedMemberId,memberName);
 	}
 
-	public List<Article> getArticles() {
+	public List<Article> getArticles(String searchKeyword) {
 		
-		List<Map<String, Object>> articleListMap = articleDao.getArticles();
+		List<Map<String, Object>> articleListMap = articleDao.getArticles(searchKeyword);
 				
 		List<Article> articles = new ArrayList<>();
 		
@@ -57,6 +57,11 @@ public class ArticleService {
 
 	public void Modifylog(String title, String body, int id) {
 		articleDao.Modifylog(title,body,id);
+		
+	}
+
+	public void increaseCount(int id) {
+		articleDao.increaseCount(id);
 		
 	}
 
